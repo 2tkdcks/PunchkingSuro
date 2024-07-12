@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>라라 펀치킹 수로 계산기</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var tooltips = document.querySelectorAll('.tooltip');
+      tooltips.forEach(function(tooltip) {
+        tooltip.addEventListener('mouseenter', function() {
+          this.querySelector('.tooltip-text').style.display = 'block';
+        });
+        tooltip.addEventListener('mouseleave', function() {
+          this.querySelector('.tooltip-text').style.display = 'none';
+        });
+      });
+    });
+  </script>
+</head>
+<body>
+  <div class="flex flex-col items-center w-full min-h-screen p-4 bg-gray-100">
+    <h1 class="mb-8 text-3xl font-bold text-green-600 text-center">라라 펀치킹 수로 계산기</h1>
+    <div class="flex flex-col md:flex-row w-full max-w-2xl">
+      <div class="w-full md:w-1/2 md:mr-4 mb-4 md:mb-0">
+        <div class="bg-white rounded-lg shadow-md p-6 h-full flex flex-col justify-center">
+          <div class="image-container h-96 h-full">
+            <img src="펀치킹 환산.png" alt="펀치킹 환산" class="object-contain w-full h-auto md:h-full">
+          </div>
+          <div class="image-container h-96 h-full">
+            <img src="수로 환산.png" alt="수로 환산" class="object-contain w-full h-auto md:h-full">
+          </div>
+        </div>
+      </div>
+      <div class="w-full md:w-8/13 flex flex-col">
+        <div class="bg-white rounded-lg shadow-md p-6 flex-grow">
+          <div class="relative">
+            <div class="absolute top-2 right-2 w-5 h-5 bg-white rounded-full flex items-center justify-center text-gray-500 cursor-pointer hover:text-gray-700 border border-gray-500 tooltip">
+              <span class="text-sm">?</span>
+              <div class="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 bg-gray-800 text-white px-2 py-1 rounded text-xs whitespace-nowrap tooltip-text" style="display: none;">펀치킹용 계산기에는 헥사 환산 (구 헥사 전투력) 을 입력해야합니다. ex) 4억1127만5861 > 411275861으로 입력</div>
+            </div>
+            <div class="text-center">
+              <h2 class="text-xl font-semibold">펀치킹용 계산기</h2>
+              <p class="mt-2 text-sm text-gray-600">계산기 제작자 : 엘리시움 아기양라라쟝</p>
+            </div>
+            <div class="mt-4 space-y-4">
+              <input type="number" id="hexa" placeholder="헥사 환산 입력" class="border border-gray-300 rounded-md px-4 py-2 text-center w-full">
+              <button onclick="calculate()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">계산하기</button>
+              <div class="flex flex-col items-center space-y-2">
+                <p id="damage"></p>
+                <p id="score"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white rounded-lg shadow-md p-6 mt-4 flex-grow">
+          <div class="relative">
+            <div class="absolute top-2 right-2 w-5 h-5 bg-white rounded-full flex items-center justify-center text-gray-500 cursor-pointer hover:text-gray-700 border border-gray-500 tooltip">
+              <span class="text-sm">?</span>
+              <div class="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 bg-gray-800 text-white px-2 py-1 rounded text-xs whitespace-nowrap tooltip-text" style="display: none;">수로용 계산기에는 직업 입력을 통해 노블을 모두 0으로 만든 후에 나온 헥사 환산을 입력</div>
+            </div>
+            <div class="text-center">
+              <h2 class="text-xl font-semibold">수로용 계산기</h2>
+              <p class="mt-2 text-sm text-gray-600">펀치킹, 수로 표본 제공 : 스카니아 앵새</p>
+            </div>
+            <div class="mt-4 space-y-4">
+              <input type="number" id="hexa2" placeholder="헥사 환산 입력" class="border border-gray-300 rounded-md px-4 py-2 text-center w-full">
+              <button onclick="calculate2()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">계산하기</button>
+              <div class="flex flex-col items-center space-y-2">
+                <p id="damage2"></p>
+                <p id="score2"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<script>
+function calculate() {
+    var hexa = document.getElementById("hexa").value;
+    var hexaDamage = 0.00422346;
+    var damage = parseInt(hexa) * hexaDamage;
+    var score = 0;
+
+    if (damage >= 13671) {
+        score = 1600;
+        if (damage < 153671) {
+            score += (damage - 13671) / 350;
+        } else {
+            score += (153671 - 13671) / 350;
+            score += (damage - 153671) / 3500;
+        }
+    }
+     // 결과 숫자에 디자인 적용
+    var damageElement = document.getElementById("damage");
+    var scoreElement = document.getElementById("score");
+    damageElement.style.fontSize = "18px";
+    damageElement.style.fontWeight = "bold";
+    damageElement.style.color = "#000000";
+    scoreElement.style.fontSize = "18px";
+    scoreElement.style.fontWeight = "bold";
+    scoreElement.style.color = "#000000";
+
+    damage = damage / 10000;
+    damageElement.innerText = "데미지: " + damage.toFixed(1) + "조"; 
+    // damageElement.innerText = "데미지: " + damage + "억";
+    scoreElement.innerText = "점수: " + score.toFixed(1);
+}
+
+function calculate2() {
+    var hexa2 = document.getElementById("hexa2").value;
+    var hexaDamage2 = 0.00426; // 내 점수는 0.00409508 수준 기존 0.0042328;
+    var damage2 = parseInt(hexa2) * hexaDamage2;
+    var score2 = 0;
+
+    if (damage2 <= 60) {
+        score2 = damage2 / 6;
+    }
+    else if (damage2 <= 210) {
+        score2 = 10 + (damage2 - 60) / 7.5;
+    }
+    else if (damage2 <= 1710) {
+        score2 = 30 + (damage2 - 210) / 15;
+    }
+    else {
+        score2 = 130 + (damage2 - 1710) / 30;
+    }
+
+   // 결과 숫자에 디자인 적용
+    var damage2Element = document.getElementById("damage2");
+    var score2Element = document.getElementById("score2");
+    damage2Element.style.fontSize = "18px";
+    damage2Element.style.fontWeight = "bold";
+    damage2Element.style.color = "#000000";
+    score2Element.style.fontSize = "18px";
+    score2Element.style.fontWeight = "bold";
+    score2Element.style.color = "#000000";
+
+    // damage2Element.innerText = "Damage: " + damage2.toFixed(0); 데미지 출력은 굳이 안해도 될듯?
+    score2Element.innerText = "점수: " + score2.toFixed(0);
+}
+</script>
+</body>
+</html>
