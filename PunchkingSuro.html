@@ -128,6 +128,7 @@ function calculate2() {
     else {
         score2 = 130 + (damage2 - 1710) / 30;
     }
+    var score3 = score2 / 1.09
 
    // 결과 숫자에 디자인 적용
     var damage2Element = document.getElementById("damage2");
@@ -142,7 +143,7 @@ function calculate2() {
           score2 = 0;
     }
     // damage2Element.innerText = "Damage: " + damage2.toFixed(0); 데미지 출력은 굳이 안해도 될듯?
-    score2Element.innerText = "점수: " + score2.toFixed(0);
+    score2Element.innerText = "일반인 기준: " + score3.toFixed(0) + "\n최고점 기준: " + score2.toFixed(0);
 }
 </script>
 </body>
