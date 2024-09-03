@@ -63,13 +63,13 @@
     <div class="container">
         <h1>슈쪼리 프레이 계산기</h1>
         <label for="int">인트:</label>
-        <input type="number" id="int" required>
+        <input type="number" id="int" value="5251" required>
         
         <label for="intPer">인트퍼:</label>
-        <input type="number" id="intPer" required>
+        <input type="number" id="intPer" value="442" required>
         
         <label for="nonAppliedInt">미적용인트:</label>
-        <input type="number" id="nonAppliedInt" required>
+        <input type="number" id="nonAppliedInt" value="24330" required>
         
         <button onclick="calculate()">계산하기</button>
 
@@ -78,15 +78,16 @@
 
         <h3>인트와 인트퍼 증가 계산</h3>
         <label for="increaseInt">인트 증가량:</label>
-        <input type="number" id="increaseInt" required>
+        <input type="number" id="increaseInt" value="0" required>
         
         <label for="increaseIntPer">인트퍼 증가량:</label>
-        <input type="number" id="increaseIntPer" required>
+        <input type="number" id="increaseIntPer" value="0" required>
         
         <button onclick="calculateIncrease()">증가된 결과 계산하기</button>
 
         <h2>증가된 결과:</h2>
         <p id="increasedResult"></p>
+        <p id="increaseAmount" style="font-size: 18px; color: #4caf50; text-align: center;"></p>
     </div>
 
     <script>
@@ -103,10 +104,17 @@
             const intPer = parseFloat(document.getElementById('intPer').value) / 100; // 100으로 나누기
             const increaseInt = parseFloat(document.getElementById('increaseInt').value);
             const increaseIntPer = parseFloat(document.getElementById('increaseIntPer').value) / 100; // 100으로 나누기
+            
             const newInt = int + increaseInt;
             const newIntPer = intPer + increaseIntPer;
-            const result = Math.floor((newInt + 4016) * (newIntPer + 1.64) + parseFloat(document.getElementById('nonAppliedInt').value)); // 소수점 생략
+            const nonAppliedInt = parseFloat(document.getElementById('nonAppliedInt').value);
+            const result = Math.floor((newInt + 4016) * (newIntPer + 1.64) + nonAppliedInt); // 소수점 생략
+
+            const previousResult = Math.floor((int + 4016) * (intPer + 1.64) + nonAppliedInt);
+            const increaseAmount = result - previousResult; // 증가된 수치
+            
             document.getElementById('increasedResult').innerText = `증가된 결과: ${result}`;
+            document.getElementById('increaseAmount').innerText = `증가된 수치: ${increaseAmount}`; // 증가된 수치 출력
         }
     </script>
 </body>
