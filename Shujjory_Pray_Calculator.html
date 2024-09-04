@@ -74,6 +74,7 @@
         <button onclick="calculate()">계산하기</button>
 
         <p id="result"></p>
+        <p id="seedlingX"></p> <!-- 시드링 가동 X 출력 -->
 
         <label for="increaseInt">인트 증가량:</label>
         <input type="number" id="increaseInt" value="0" required>
@@ -84,6 +85,7 @@
         <button onclick="calculateIncrease()">증가된 결과 계산하기</button>
 
         <p id="increasedResult"></p>
+        <p id="increasedSeedlingX"></p> <!-- 증가된 결과의 시드링 가동 X 출력 -->
         <p id="increaseAmount" style="font-size: 18px; color: #4caf50; text-align: center;"></p>
     </div>
 
@@ -92,8 +94,11 @@
             const int = parseFloat(document.getElementById('int').value);
             const intPer = parseFloat(document.getElementById('intPer').value) / 100; // 100으로 나누기
             const nonAppliedInt = parseFloat(document.getElementById('nonAppliedInt').value);
+            const seedlingX = Math.floor(int * (intPer + 1.64) + nonAppliedInt); // 시드링 가동 X 계산
             const result = Math.floor((int + 4016) * (intPer + 1.64) + nonAppliedInt); // 소수점 생략
-            document.getElementById('result').innerText = `계산 결과: ${result}`;
+            
+            document.getElementById('result').innerText = `시드링 가동 중: ${result}`;
+            document.getElementById('seedlingX').innerText = `시드링 가동 X: ${seedlingX}`; // 시드링 가동 X 출력
         }
 
         function calculateIncrease() {
@@ -105,12 +110,14 @@
             const newInt = int + increaseInt;
             const newIntPer = intPer + increaseIntPer;
             const nonAppliedInt = parseFloat(document.getElementById('nonAppliedInt').value);
+            const newSeedlingX = Math.floor(newInt * (newIntPer + 1.64) + nonAppliedInt); // 증가된 시드링 가동 X 계산
             const result = Math.floor((newInt + 4016) * (newIntPer + 1.64) + nonAppliedInt); // 소수점 생략
 
             const previousResult = Math.floor((int + 4016) * (intPer + 1.64) + nonAppliedInt);
             const increaseAmount = result - previousResult; // 증가된 수치
             
             document.getElementById('increasedResult').innerText = `증가된 결과: ${result}`;
+            document.getElementById('increasedSeedlingX').innerText = `증가된 시드링 가동 X: ${newSeedlingX}`; // 증가된 시드링 가동 X 출력
             document.getElementById('increaseAmount').innerText = `증가된 수치: ${increaseAmount}`; // 증가된 수치 출력
         }
     </script>
