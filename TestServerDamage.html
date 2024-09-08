@@ -1,0 +1,110 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>테스트 서버 딜 상승량 계산기</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>테스트 서버 딜 상승량 계산기</h1>
+        <label for="gubi">굽이굽이:</label>
+        <input type="number" id="gubi" value="8.10"><br>
+        
+        <label for="big">큰기지개:</label>
+        <input type="number" id="big" value="9.48"><br>
+        
+        <label for="yongsot">용솟음:</label>
+        <input type="number" id="yongsot" value="7.50"><br>
+        
+        <label for="hae">해강산:</label>
+        <input type="number" id="hae" value="10.76"><br>
+        
+        <label for="hae2">해분출:</label>
+        <input type="number" id="hae2" value="18.58"><br>
+        
+        <label for="baram">바람분출:</label>
+        <input type="number" id="baram" value="11.43"><br>
+        
+        <label for="gang">강분출:</label>
+        <input type="number" id="gang" value="10.39"><br>
+
+        <button onclick="calculateDamage()">계산하기</button>
+        
+        <h2>최종 데미지 증가량: <span id="result">0</span></h2>
+    </div>
+
+    <script>
+        function calculateDamage() {
+            const gubi = parseFloat(document.getElementById('gubi').value) || 0;
+            const big = parseFloat(document.getElementById('big').value) || 0;
+            const yongsot = parseFloat(document.getElementById('yongsot').value) || 0;
+            const hae = parseFloat(document.getElementById('hae').value) || 0;
+            const hae2 = parseFloat(document.getElementById('hae2').value) || 0;
+            const baram = parseFloat(document.getElementById('baram').value) || 0;
+            const gang = parseFloat(document.getElementById('gang').value) || 0;
+
+            const gubiResult = 1 + (gubi * 0.66666 / 100);
+            const bigResult = 1 + (big * 0.4666666 / 100);
+            const yongsotResult = 1 + (yongsot * 0.24666666 / 100);
+            const haeResult = 1 + (hae * 0.3484 / 100);
+            const hae2Result = 1 + (hae2 * 0.01 / 100);
+            const baramResult = 1 + (baram * 0.0987 / 100);
+            const gangResult = 1 + (gang * 0.0691 / 100);
+
+            const totalDamage = gubiResult * bigResult * yongsotResult * haeResult * hae2Result * baramResult * gangResult;
+
+            const finalResult = (totalDamage - 1) * 100;
+
+            document.getElementById('result').textContent = finalResult.toFixed(4);
+        }
+    </script>
+</body>
