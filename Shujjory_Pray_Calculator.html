@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #e9f5e9; /* 연두색 배경 */
+            background-color: #e9f5ff; /* 파란색 배경 */
             margin: 0;
             padding: 20px;
         }
@@ -22,7 +22,7 @@
         }
         h1 {
             text-align: center;
-            color: #4caf50; /* 연두색 */
+            color: #2196F3; /* 파란색 */
         }
         label {
             font-weight: bold;
@@ -39,7 +39,7 @@
         button {
             width: 100%;
             padding: 10px;
-            background-color: #4caf50; /* 연두색 버튼 */
+            background-color: #2196F3; /* 파란색 버튼 */
             color: white;
             border: none;
             border-radius: 4px;
@@ -47,14 +47,14 @@
             font-size: 16px;
         }
         button:hover {
-            background-color: #45a049; /* 버튼 호버 색상 */
+            background-color: #1976D2; /* 버튼 호버 색상 */
         }
         h2, h3 {
-            color: #4caf50; /* 연두색 */
+            color: #2196F3; /* 파란색 */
         }
         p {
             font-size: 18px;
-            color: #4caf50; /* 연두색 텍스트 */
+            color: #2196F3; /* 파란색 텍스트 */
             text-align: center;
         }
     </style>
@@ -77,6 +77,8 @@
 
         <p id="result"></p>
         <p id="seedlingX"></p> <!-- 시드링 가동 X 출력 -->
+        <p id="freyResult"></p> <!-- 프레이 결과 출력 -->
+        <p id="libraResult"></p> <!-- 리브라 결과 출력 -->
 
         <label for="increaseInt">인트 증가량:</label>
         <input type="number" id="increaseInt" value="0" required>
@@ -88,7 +90,9 @@
 
         <p id="increasedResult"></p>
         <p id="increasedSeedlingX"></p> <!-- 증가된 결과의 시드링 가동 X 출력 -->
-        <p id="increaseAmount" style="font-size: 18px; color: #4caf50; text-align: center;"></p>
+        <p id="increasedFreyResult"></p> <!-- 증가된 프레이 결과 출력 -->
+        <p id="increasedLibraResult"></p> <!-- 증가된 리브라 결과 출력 -->
+        <p id="increaseAmount" style="font-size: 18px; color: #2196F3; text-align: center;"></p>
     </div>
 
     <script>
@@ -97,23 +101,28 @@
             const int = parseFloat(document.getElementById('int').value);
             const intPer = parseFloat(document.getElementById('intPer').value) / 100; // 100으로 나누기
             const nonAppliedInt = parseFloat(document.getElementById('nonAppliedInt').value);
-            const MapleHero2 = ((level * 5) + 18) * 0.64
+            const MapleHero2 = ((level * 5) + 18) * 0.64;
             const seedlingX = Math.floor((int + MapleHero2) * (intPer + 1) + nonAppliedInt); // 시드링 가동 X 계산
             const result = Math.floor((int + MapleHero2 + 4016) * (intPer + 1) + nonAppliedInt); // 소수점 생략
             
             document.getElementById('result').innerText = `시드링 가동 중: ${result}`;
             document.getElementById('seedlingX').innerText = `시드링 가동 X: ${seedlingX}`; // 시드링 가동 X 출력
+
+            // 프레이와 리브라 계산
+            const frey = Math.min(6 + Math.floor(seedlingX / 3000), 33);
+            const libra = Math.min(5 + Math.floor(seedlingX / 1250), 40);
+            document.getElementById('freyResult').innerText = `프레이: ${frey}`;
+            document.getElementById('libraResult').innerText = `리브라: ${libra}`;
         }
 
         function calculateIncrease() {
-
             const level = parseFloat(document.getElementById('level').value);
             const int = parseFloat(document.getElementById('int').value);
             const intPer = parseFloat(document.getElementById('intPer').value) / 100; // 100으로 나누기
             const increaseInt = parseFloat(document.getElementById('increaseInt').value);
             const increaseIntPer = parseFloat(document.getElementById('increaseIntPer').value) / 100; // 100으로 나누기
 
-            const MapleHero2 = ((level * 5) + 18) * 0.64
+            const MapleHero2 = ((level * 5) + 18) * 0.64;
             const newInt = int + increaseInt;
             const newIntPer = intPer + increaseIntPer;
             const nonAppliedInt = parseFloat(document.getElementById('nonAppliedInt').value);
@@ -125,6 +134,13 @@
             
             document.getElementById('increasedResult').innerText = `증가된 결과: ${result}`;
             document.getElementById('increasedSeedlingX').innerText = `증가된 시드링 가동 X: ${newSeedlingX}`; // 증가된 시드링 가동 X 출력
+
+            // 증가된 프레이와 리브라 계산
+            const increasedFrey = Math.min(6 + Math.floor(newSeedlingX / 3000), 33);
+            const increasedLibra = Math.min(5 + Math.floor(newSeedlingX / 1250), 40);
+            document.getElementById('increasedFreyResult').innerText = `증가된 프레이: ${increasedFrey}`;
+            document.getElementById('increasedLibraResult').innerText = `증가된 리브라: ${increasedLibra}`;
+
             document.getElementById('increaseAmount').innerText = `증가된 수치: ${increaseAmount}`; // 증가된 수치 출력
         }
     </script>
