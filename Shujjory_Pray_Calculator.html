@@ -129,19 +129,18 @@
             const newSeedlingX = Math.floor((newInt + MapleHero2) * (newIntPer + 1) + nonAppliedInt); // 증가된 시드링 가동 X 계산
             const result = Math.floor((newInt + MapleHero2 + 4016) * (newIntPer + 1) + nonAppliedInt); // 소수점 생략
 
-            const previousResult = Math.floor((int + MapleHero2 + 4016) * (intPer + 1) + nonAppliedInt);
-            const increaseAmount = result - previousResult; // 증가된 수치
+            const increaseAmount = newSeedlingX - seedlingX; // 증가된 수치
             
-            document.getElementById('increasedResult').innerText = `증가된 결과: ${result}`;
-            document.getElementById('increasedSeedlingX').innerText = `증가된 시드링 가동 X: ${newSeedlingX}`; // 증가된 시드링 가동 X 출력
+            document.getElementById('increasedResult').innerText = `시드링 가동 중: ${result}`;
+            document.getElementById('increasedSeedlingX').innerText = `시드링 가동 X: ${newSeedlingX}`; // 증가된 시드링 가동 X 출력
 
             // 증가된 프레이와 리브라 계산
             const increasedFrey = Math.min(6 + Math.floor(newSeedlingX / 3000), 33);
             const increasedLibra = Math.min(5 + Math.floor(newSeedlingX / 1250), 40);
-            document.getElementById('increasedFreyResult').innerText = `증가된 프레이: ${increasedFrey}`;
-            document.getElementById('increasedLibraResult').innerText = `증가된 리브라: ${increasedLibra}`;
+            document.getElementById('increasedFreyResult').innerText = `프레이: ${increasedFrey}`;
+            document.getElementById('increasedLibraResult').innerText = `리브라: ${increasedLibra}`;
 
-            document.getElementById('increaseAmount').innerText = `증가된 수치: ${increaseAmount}`; // 증가된 수치 출력
+            document.getElementById('increaseAmount').innerText = `증가된 int 수치: ${increaseAmount}`; // 증가된 수치 출력
         }
     </script>
 </body>
