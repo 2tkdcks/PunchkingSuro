@@ -129,7 +129,8 @@
             const newSeedlingX = Math.floor((newInt + MapleHero2) * (newIntPer + 1) + nonAppliedInt); // 증가된 시드링 가동 X 계산
             const result = Math.floor((newInt + MapleHero2 + 4016) * (newIntPer + 1) + nonAppliedInt); // 소수점 생략
 
-            const increaseAmount = newSeedlingX - seedlingX; // 증가된 수치
+            const preSeedlingX = Math.floor((int + MapleHero2) * (intPer + 1) + nonAppliedInt); // 기존 수치
+            const increaseAmount = newSeedlingX - preSeedlingX; // 증가된 수치
             
             document.getElementById('increasedResult').innerText = `시드링 가동 중: ${result}`;
             document.getElementById('increasedSeedlingX').innerText = `시드링 가동 X: ${newSeedlingX}`; // 증가된 시드링 가동 X 출력
