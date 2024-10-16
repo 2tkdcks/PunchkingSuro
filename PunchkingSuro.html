@@ -296,10 +296,10 @@ function HexaCalculate() {
 function calculate() {
     var HexaLevel = HexaCalculate()
     var hexa = document.getElementById("hexa").value;
-    var hexaDamage = 0.000422346 * HexaLevel;
+    var hexaDamage = 0.0004688041 * HexaLevel;
     var damage = parseInt(hexa) * hexaDamage;
     var score = 0;
-
+/* 구 버전 펀치킹 데이터
     if (damage >= 13671) {
         score = 1600;
         if (damage < 153671) {
@@ -309,6 +309,11 @@ function calculate() {
             score += (damage - 153671) / 3500;
         }
     }
+*/
+    if (damage >= 13671) {
+        score = 1250;
+        score += (damage - 13671) / 80;
+    }   
      // 결과 숫자에 디자인 적용
     var damageElement = document.getElementById("damage");
     var scoreElement = document.getElementById("score");
@@ -320,7 +325,7 @@ function calculate() {
     scoreElement.style.color = "#000000";
 
     damage = damage / 1000;
-    if ( score > 2050 ) { score = 2050; }
+    if ( score > 5000 ) { score = 5000; }
     damageElement.innerText = "데미지: " + damage.toFixed(1) + "조"; 
     // damageElement.innerText = "데미지: " + damage + "억";
     scoreElement.innerText = "점수: " + score.toFixed(1);
