@@ -186,54 +186,6 @@
                 font-size: 1.2rem;
             }
         }
-
-        /* 컨테이너 크기 조정 */
-        .container {
-            max-width: 800px !important; /* 기존 max-w-6xl 대신 직접 지정 */
-            transform: scale(0.8);
-            transform-origin: top center;
-            margin-top: -5vh; /* 상단 여백 조정 */
-        }
-
-        /* 제목 크기 조정 */
-        h1.text-5xl {
-            font-size: 2.5rem; /* 기존보다 약간 작게 */
-        }
-
-        /* 카드 내부 제목 크기 조정 */
-        h2.text-2xl {
-            font-size: 1.25rem;
-        }
-
-        /* 입력 필드 크기 조정 */
-        input[type="number"] {
-            padding: 0.5rem 1rem;
-            font-size: 0.9rem;
-        }
-
-        /* 버튼 크기 조정 */
-        button {
-            padding: 0.5rem 1rem;
-            font-size: 0.9rem;
-        }
-
-        /* 결과 텍스트 크기 조정 */
-        #damage, #damage2, #score, #score2 {
-            font-size: 0.9rem;
-        }
-
-        /* 레이블 텍스트 크기 조정 */
-        label {
-            font-size: 0.8rem;
-        }
-
-        /* 모바일 대응은 그대로 유지 */
-        @media (max-width: 768px) {
-            .container {
-                transform: none; /* 모바일에서는 transform 제거 */
-                margin-top: 0;
-            }
-        }
     </style>
 </head>
 <body>
@@ -533,7 +485,7 @@
       function calculate2() {
           var HexaLevel = HexaCalculate()
           var hexa2 = document.getElementById("hexa2").value;
-          var hexaDamage2 = 0.005328 * HexaLevel;
+          var hexaDamage2 = 0.005278 * HexaLevel;
           var damage2 = parseInt(hexa2) * hexaDamage2;
           var score2 = 0;
       
