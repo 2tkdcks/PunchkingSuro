@@ -1,16 +1,12 @@
-name: CI
+name: Use Maple API Key
 
-on: [push]
+on: workflow_dispatch
 
 jobs:
-  build:
+  use-maple-api-key:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
 
-      - name: Run script
-        env:
-          MAPLE_API_KEY: ${{ secrets.MAPLE_API_KEY }} # 시크릿을 환경 변수로 설정
+    steps:
+      - name: Access Maple API Key
         run: |
-          node script.js # script.js 파일 실행
+          echo "Maple API Key: ${{ secrets.MAPLE_API_KEY }}"
