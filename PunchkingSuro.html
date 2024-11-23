@@ -43,17 +43,6 @@
             box-shadow: 0 4px 12px rgba(34, 197, 94, 0.25);
         }
         
-        .tooltip .tooltip-content {
-            background: rgba(17, 24, 39, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            width: 70vw;
-            max-width: 800px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
         /* 헤더 스타일 개선 */
         h1 {
             background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
@@ -93,9 +82,9 @@
         .tooltip .tooltip-content {
             visibility: hidden;
             width: 420px;
-            background-color: white;
+            background-color: rgba(255, 255, 255, 0.95);
             text-align: center;
-            padding: 10px;
+            padding: 1rem;
             position: absolute;
             z-index: 1000;
             top: 125%;
@@ -105,6 +94,7 @@
             transition: opacity 0.3s;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
         }
         
         .tooltip:hover .tooltip-content {
@@ -191,6 +181,7 @@
 <body>
     <div class="container mx-auto px-4 py-12 max-w-6xl">
         <h1 class="text-5xl font-black text-center mb-12">라라 펀치킹 수로 계산기</h1>
+        
         <div class="flex flex-col items-center mb-8">
             <div class="tooltip">
                 <div class="flex items-center">
@@ -204,7 +195,14 @@
                 </div>
             </div>
         </div>
-        
+
+        <div class="search-form mb-8">
+            <input type="text" id="characterName" placeholder="캐릭터 이름을 입력하세요" class="border border-gray-300 rounded-md px-4 py-2 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-green-500 text-center">
+            <button onclick="searchCharacter()" class="w-full btn-green text-white font-bold py-2 px-4 rounded transition duration-300">검색</button>
+            <div class="loading" id="loading">로딩중..</div>
+            <div class="error" id="error"></div>
+        </div>
+
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
             <div class="card bg-white rounded-lg shadow-md p-6">
                 <div class="flex flex-col items-center mb-4">
@@ -265,6 +263,7 @@
             </div>
         </div>
     </div>
+
     <script>
         document.addEventListener("contextmenu", (event) => event.preventDefault()); // 우클릭 방지
         document.addEventListener("keydown", (event) => {
@@ -272,7 +271,84 @@
                 event.preventDefault(); // F12, Ctrl+Shift+I 방지
             }   
         });
-      function HexaCalculate() {
+        async function searchCharacter() {
+            const characterName = document.getElementById('characterName').value;
+            const loading = document.getElementById('loading');
+            const error = document.getElementById('error');
+
+            if (!characterName) {
+                error.textContent = '캐릭터 이름을 입력해주세요.';
+                error.style.display = 'block';
+                return;
+            }
+
+            loading.style.display = 'block';
+            error.style.display = 'none';
+
+            try {
+                const apiKey = ${{secrets.MAPLE_API_KEY}};
+                
+                // 날짜 설정 (어제 날짜 사용)
+                const yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                const dateStr = yesterday.toISOString().split('T')[0];
+
+                // 1. Character OCID 조회
+                const ocidResponse = await fetch(`https://open.api.nexon.com/maplestory/v1/id?character_name=${encodeURIComponent(characterName)}`, {
+                    headers: {
+                        'x-nxopen-api-key': apiKey
+                    }
+                });
+
+                if (!ocidResponse.ok) {
+                    throw new Error('캐릭터를 찾을 수 없습니다.');
+                }
+
+                const ocidData = await ocidResponse.json();
+                
+                // 2. 캐릭터 기본 정보 조회
+                const characterResponse = await fetch(`https://open.api.nexon.com/maplestory/v1/character/basic?ocid=${ocidData.ocid}&date=${dateStr}`, {
+                    headers: {
+                        'x-nxopen-api-key': apiKey
+                    }
+                });
+
+                // 3. HEXA 매트릭스 정보 조회
+                const hexaResponse = await fetch(`https://open.api.nexon.com/maplestory/v1/character/hexamatrix?ocid=${ocidData.ocid}&date=${dateStr}`, {
+                    headers: {
+                        'x-nxopen-api-key': apiKey
+                    }
+                });
+
+                if (!characterResponse.ok || !hexaResponse.ok) {
+                    throw new Error('캐릭터 정보를 가져올 수 없습니다.');
+                }
+
+                const characterData = await characterResponse.json();
+                const hexaData = await hexaResponse.json();
+
+                if (characterData.character_class != '라라'){
+                    throw new Error('라라가 아닙니다.');
+                }
+
+                // HEXA 코어 레벨 업데이트
+                document.getElementById("MasteryCore1").value = hexaData.character_hexa_core_equipment[1].hexa_core_level || 0;
+                document.getElementById("MasteryCore2").value = hexaData.character_hexa_core_equipment[2].hexa_core_level || 0;
+                document.getElementById("OriginCore").value = hexaData.character_hexa_core_equipment[0].hexa_core_level || 0;
+                document.getElementById("FifthCore1").value = hexaData.character_hexa_core_equipment[4].hexa_core_level || 0;
+                document.getElementById("FifthCore2").value = hexaData.character_hexa_core_equipment[6].hexa_core_level || 0;
+                document.getElementById("FifthCore3").value = hexaData.character_hexa_core_equipment[3].hexa_core_level || 0;
+                document.getElementById("FifthCore4").value = hexaData.character_hexa_core_equipment[5].hexa_core_level || 0;
+
+            } catch (err) {
+                console.error('Error:', err);
+                error.textContent = err.message;
+                error.style.display = 'block';
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+        function HexaCalculate() {
           // 스킬 레벨 입력에서 값 가져오기 및 숫자로 변환
           let MasteryCore1 = parseInt(document.getElementById("MasteryCore1").value);
           let MasteryCore2 = parseInt(document.getElementById("MasteryCore2").value);
@@ -449,25 +525,25 @@
           nowFifthShare4;
       
           return HexaNowDamage / HexaFullDamage;
-      }
+        }
       
-      function calculate() {
+        function calculate() {
           var HexaLevel = HexaCalculate()
           var hexa = document.getElementById("hexa").value;
           var hexaDamage = 0.0004880131 * HexaLevel;
           var damage = parseInt(hexa) * hexaDamage;
           var score = 0;
-      /* 구 버전 펀치킹 데이터
-          if (damage >= 13671) {
-              score = 1600;
-              if (damage < 153671) {
-                  score += (damage - 13671) / 350;
-              } else {
-                  score += (153671 - 13671) / 350;
-                  score += (damage - 153671) / 3500;
-              }
-          }
-      */
+        /* 구 버전 펀치킹 데이터
+            if (damage >= 13671) {
+                score = 1600;
+                if (damage < 153671) {
+                    score += (damage - 13671) / 350;
+                } else {
+                    score += (153671 - 13671) / 350;
+                    score += (damage - 153671) / 3500;
+                }
+            }
+        */
           if (damage >= 13671) {
               score = 1250;
               score += (damage - 13671) / 80;
@@ -486,9 +562,9 @@
           if ( score > 5000 ) { score = 5000; }
           damageElement.innerText = "데미지: " + damage.toFixed(1) + "조" + "\n점수: " + score.toFixed(0); 
           // damageElement.innerText = "데미지: " + damage + "억";
-      }
+        }
       
-      function calculate2() {
+        function calculate2() {
           var HexaLevel = HexaCalculate()
           var hexa2 = document.getElementById("hexa2").value;
           var hexaDamage2 = 0.005278 * HexaLevel;
@@ -523,10 +599,10 @@
           }
           // damage2Element.innerText = "Damage: " + damage2.toFixed(0); 데미지 출력은 굳이 안해도 될듯?
           score2Element.innerText = "일반인 기준: " + score3.toFixed(0) + "\n최고점 기준: " + score2.toFixed(0);
-      }
+        }
 
-      // 모바일 환경에서 닫기 버튼 동작
-      document.addEventListener('DOMContentLoaded', function() {
+        // 모바일 환경에서 닫기 버튼 동작
+        document.addEventListener('DOMContentLoaded', function() {
           const closeButton = document.querySelector('.close-tooltip');
           const tooltipContent = document.querySelector('.tooltip-content');
           const tooltipTrigger = document.querySelector('.tooltip');
@@ -549,8 +625,8 @@
                   tooltipContent.style.visibility = isVisible ? 'hidden' : 'visible';
                   tooltipContent.style.opacity = isVisible ? '0' : '1';
               });
-          }
-      });
+            }
+        });
       </script>
 </body>
 </html>
