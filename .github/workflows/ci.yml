@@ -3,14 +3,14 @@ name: CI
 on: [push]
 
 jobs:
-   build:
-      runs-on: ubuntu-latest
-      steps:
-         - name: Checkout code
-           uses: actions/checkout@v2
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-         - name: Run script
-           env:
-             MAPLE_API_KEY: ${{ secrets.MAPLE_API_KEY }} # 시크릿을 환경 변수로 설정
-           run: |
-             node script.js # script.js 파일 실행
+      - name: Run script
+        env:
+          MAPLE_API_KEY: ${{ secrets.MAPLE_API_KEY }} # 시크릿을 환경 변수로 설정
+        run: |
+          node script.js # script.js 파일 실행
