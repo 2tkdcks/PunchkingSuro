@@ -266,6 +266,12 @@
         </div>
     </div>
     <script>
+        document.addEventListener("contextmenu", (event) => event.preventDefault()); // 우클릭 방지
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "F12" || (event.ctrlKey && event.shiftKey && event.key === "I")) {
+                event.preventDefault(); // F12, Ctrl+Shift+I 방지
+            }   
+        });
       function HexaCalculate() {
           // 스킬 레벨 입력에서 값 가져오기 및 숫자로 변환
           let MasteryCore1 = parseInt(document.getElementById("MasteryCore1").value);
