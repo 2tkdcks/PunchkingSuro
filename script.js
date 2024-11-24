@@ -25,7 +25,6 @@
             const dateStr = yesterday.toISOString().split('T')[0];
 
             // 1. Character OCID 조회
-            const encodedCharacterName = encodeURIComponent(characterName);
             const ocidResponse = await fetch(`https://open.api.nexon.com/maplestory/v1/id?character_name=${encodeURIComponent(characterName)}`, {
                 headers: {
                     'x-nxopen-api-key': apiKey
