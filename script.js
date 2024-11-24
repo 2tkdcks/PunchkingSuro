@@ -32,7 +32,8 @@
             });
 
             if (!ocidResponse.ok) {
-                throw new Error('캐릭터를 찾을 수 없습니다.');
+                const errorData = await response.json();
+                throw new Error(errorData.message || '캐릭터를 찾을 수 없습니다.');
             }
 
             const ocidData = await ocidResponse.json();
