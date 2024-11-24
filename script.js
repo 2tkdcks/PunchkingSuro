@@ -350,4 +350,4 @@
 
     // 전역 스코프에서 사용할 함수들 등록
     window.HexaCalculate = HexaCalculate;
-    window.searchCharacter = searchCharacter;
+    // window.searchCharacter = searchCharacter;
