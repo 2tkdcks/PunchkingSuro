@@ -1,5 +1,5 @@
 // script.js
-    async function searchCharacter() {
+    export async function searchCharacter() {
         const characterName = document.getElementById('characterName').value;
         const loading = document.getElementById('loading');
         const error = document.getElementById('error');
