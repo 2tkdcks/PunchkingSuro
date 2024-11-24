@@ -1,10 +1,4 @@
 // script.js
-    import { config, loadEnvironmentVariables } from './config.js';
-
-    async function initializeApp() {
-        await loadEnvironmentVariables();
-    }
-
     async function searchCharacter() {
         const characterName = document.getElementById('characterName').value;
         const loading = document.getElementById('loading');
@@ -20,7 +14,10 @@
         error.style.display = 'none';
 
         try {
-            const apiKey = process.env.API;
+            const apiKey = window.env?.API;
+            if (!apiKey) {
+                throw new Error('API 키가 설정되지 않았습니다.');
+            }
             
             // 날짜 설정 (어제 날짜 사용)
             const yesterday = new Date();
@@ -353,7 +350,3 @@
     // 전역 스코프에서 사용할 함수들 등록
     window.HexaCalculate = HexaCalculate;
     window.searchCharacter = searchCharacter;
-
-    window.addEventListener('DOMContentLoaded', () => {
-        initializeApp();
-    });
