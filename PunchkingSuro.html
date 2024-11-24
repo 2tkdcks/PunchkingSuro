@@ -199,7 +199,7 @@
         <div class="search-form mb-8">
             <input type="text" id="characterName" placeholder="캐릭터 이름을 입력하세요" class="border border-gray-300 rounded-md px-4 py-2 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-green-500 text-center">
             <button onclick="searchCharacter()" class="w-full btn-green text-white font-bold py-2 px-4 rounded transition duration-300">검색</button>
-            <div class="loading" id="loading">구현중..</div>
+            <div class="loading" id="loading">로딩중..</div>
             <div class="error" id="error"></div>
         </div>
 
@@ -209,7 +209,7 @@
                     <h2 class="text-2xl font-semibold text-center text-gray-700">펀치킹용 계산기</h2>
                 </div>
                 <p class="mt-2 mb-4 text-sm text-center text-gray-600">계산기 제작자 : 엘리시움 아기양라라쟝</p>
-                <input type="number" id="hexa" placeholder="일반 환산 입력" class="border border-gray-300 rounded-md px-4 py-2 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-green-500 text-center"> <!-- 중앙 정렬 -->
+                <input type="number" id="hexa" placeholder="일반 환산 입력" class="border border-gray-300 rounded-md px-4 py-2 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-green-500 text-center">
                 <button onclick="calculate()" class="w-full btn-green text-white font-bold py-2 px-4 rounded transition duration-300">계산하기</button>
                 <div class="result-container">
                     <p id="damage" class="text-lg text-center text-gray-700"></p>
@@ -220,7 +220,7 @@
             <div class="card bg-white rounded-lg shadow-md p-6">
                 <h2 class="text-2xl font-semibold mb-4 text-center text-gray-700">수로용 계산기</h2>
                 <p class="mt-2 mb-4 text-sm text-center text-gray-600">펀치킹, 수로 표본 제공 : 스카니아 엥새</p>
-                <input type="number" id="hexa2" placeholder="헥사 환산 아님" class="border border-gray-300 rounded-md px-4 py-2 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-green-500 text-center"> <!-- 중앙 정렬 -->
+                <input type="number" id="hexa2" placeholder="헥사 환산 아님" class="border border-gray-300 rounded-md px-4 py-2 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-green-500 text-center">
                 <button onclick="calculate2()" class="w-full btn-green text-white font-bold py-2 px-4 rounded transition duration-300">계산하기</button>
                 <div class="result-container">
                     <p id="damage2" class="text-lg text-center text-gray-700"></p>
@@ -232,38 +232,45 @@
         <div class="card bg-white rounded-lg shadow-md p-6">
             <h2 class="text-2xl font-semibold mb-4 text-center text-gray-700">스킬 레벨 입력</h2>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div>
-                    <label for="MasteryCore1" class="block mb-2 text-sm font-medium text-gray-700 text-center">정뿌</label>
-                    <input type="number" id="MasteryCore1" placeholder="0~30" min="0" max="30" class="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500 text-center"> <!-- 중앙 정렬 -->
+                <div class="flex flex-col items-center">
+                    <img src="정뿌.png" alt="정뿌" class="w-6 h-6 mb-2">
+                    <span class="text-sm text-gray-700">정기 뿌리기</span>
+                    <input type="number" id="MasteryCore1" placeholder="0~30" min="0" max="30" class="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500 text-center">
                 </div>
-                <div>
-                    <label for="MasteryCore2" class="block mb-2 text-sm font-medium text-gray-700 text-center">분출</label>
-                    <input type="number" id="MasteryCore2" placeholder="1~30" min="1" max="30" class="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500 text-center"> <!-- 중앙 정렬 -->
+                <div class="flex flex-col items-center">
+                    <img src="분출.png" alt="분출" class="w-6 h-6 mb-2">
+                    <span class="text-sm text-gray-700">분출</span>
+                    <input type="number" id="MasteryCore2" placeholder="1~30" min="1" max="30" class="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500 text-center">
                 </div>
-                <div>
-                    <label for="OriginCore" class="block mb-2 text-sm font-medium text-gray-700 text-center">꽃누리</label>
-                    <input type="number" id="OriginCore" placeholder="1~30" min="1" max="30" class="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500 text-center"> <!-- 중앙 정렬 -->
+                <div class="flex flex-col items-center">
+                    <img src="꽃누리.png" alt="꽃누리" class="w-6 h-6 mb-2">
+                    <span class="text-sm text-gray-700">새록새록 꽃누리</span>
+                    <input type="number" id="OriginCore" placeholder="1~30" min="1" max="30" class="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500 text-center">
                 </div>
-                <div>
-                    <label for="FifthCore1" class="block mb-2 text-sm font-medium text-gray-700 text-center">해강산</label>
-                    <input type="number" id="FifthCore1" placeholder="0~30" min="0" max="30" class="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500 text-center"> <!-- 중앙 정렬 -->
+                <div class="flex flex-col items-center">
+                    <img src="해강산.png" alt="해강산" class="w-6 h-6 mb-2">
+                    <span class="text-sm text-gray-700">해 강 산 바람</span>
+                    <input type="number" id="FifthCore1" placeholder="0~30" min="0" max="30" class="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500 text-center">
                 </div>
-                <div>
-                    <label for="FifthCore2" class="block mb-2 text-sm font-medium text-gray-700 text-center">굽이굽이</label>
-                    <input type="number" id="FifthCore2" placeholder="0~30" min="0" max="30" class="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500 text-center"> <!-- 중앙 정렬 -->
+                <div class="flex flex-col items-center">
+                    <img src="굽이굽이.png" alt="굽이굽이" class="w-6 h-6 mb-2">
+                    <span class="text-sm text-gray-700">산등성이 굽이굽이</span>
+                    <input type="number" id="FifthCore2" placeholder="0~30" min="0" max="30" class="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500 text-center">
                 </div>
-                <div>
-                    <label for="FifthCore3" class="block mb-2 text-sm font-medium text-gray-700 text-center">큰기지개</label>
-                    <input type="number" id="FifthCore3" placeholder="0~30" min="0" max="30" class="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500 text-center"> <!-- 중앙 정렬 -->
+                <div class="flex flex-col items-center">
+                    <img src="큰기지개.png" alt="큰기지개" class="w-6 h-6 mb-2">
+                    <span class="text-sm text-gray-700">큰 기지개</span>
+                    <input type="number" id="FifthCore3" placeholder="0~30" min="0" max="30" class="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500 text-center">
                 </div>
-                <div>
-                    <label for="FifthCore4" class="block mb-2 text-sm font-medium text-gray-700 text-center">용솟음</label>
-                    <input type="number" id="FifthCore4" placeholder="0~30" min="0" max="30" class="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500 text-center"> <!-- 중앙 정렬 -->
+                <div class="flex flex-col items-center">
+                    <img src="용솟음.png" alt="용솟음" class="w-6 h-6 mb-2">
+                    <span class="text-sm text-gray-700">용솟음치는 정기</span>
+                    <input type="number" id="FifthCore4" placeholder="0~30" min="0" max="30" class="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500 text-center">
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="script.js"></script> <!-- 새로운 스크립트 파일 추가 -->
+    <script src="script.js"></script>
 </body>
 </html>
