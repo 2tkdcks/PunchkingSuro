@@ -1,6 +1,4 @@
 // script.js
-    import './apiKey.js'; // API 키를 가져옵니다.
-
     async function searchCharacter() {
         const characterName = document.getElementById('characterName').value;
         const loading = document.getElementById('loading');
@@ -16,7 +14,7 @@
         error.style.display = 'none';
 
         try {
-            // const apiKey = process.env.MAPLE_API_KEY;
+            const apiKey = process.env.MAPLE_API_KEY;
             
             // 날짜 설정 (어제 날짜 사용)
             const yesterday = new Date();
