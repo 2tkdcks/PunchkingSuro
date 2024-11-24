@@ -1,4 +1,6 @@
 // script.js
+    import './apiKey.js'; // API 키를 가져옵니다.
+
     async function searchCharacter() {
         const characterName = document.getElementById('characterName').value;
         const loading = document.getElementById('loading');
