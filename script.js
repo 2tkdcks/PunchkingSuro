@@ -1,4 +1,10 @@
 // script.js
+    import { config, loadEnvironmentVariables } from './config.js';
+
+    async function initializeApp() {
+        await loadEnvironmentVariables();
+    }
+
     async function searchCharacter() {
         const characterName = document.getElementById('characterName').value;
         const loading = document.getElementById('loading');
@@ -343,3 +349,11 @@
             tooltipContent.style.opacity = isVisible ? '0' : '1';
         });
     }
+
+    // 전역 스코프에서 사용할 함수들 등록
+    window.HexaCalculate = HexaCalculate;
+    window.searchCharacter = searchCharacter;
+
+    window.addEventListener('DOMContentLoaded', () => {
+        initializeApp();
+    });
