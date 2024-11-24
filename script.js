@@ -101,6 +101,8 @@
         let FifthShare2 = 11.45; // 굽이굽이
         let FifthShare3 = 10.28; // 큰기지개
         let FifthShare4 = 5.54; // 용솟음
+
+        let GitaShare = 2.19; // 나머지 점유율
     
         let nowOriginShare; // 오리진
     
@@ -237,7 +239,8 @@
         FifthShare1 +
         FifthShare2 +
         FifthShare3 +
-        FifthShare4;
+        FifthShare4 +
+        GitaShare;
     
         // 현재 나오는 데미지
         let HexaNowDamage = 
@@ -251,7 +254,8 @@
         nowFifthShare1 +
         nowFifthShare2 +
         nowFifthShare3 +
-        nowFifthShare4;
+        nowFifthShare4 +
+        GitaShare;
     
         return HexaNowDamage / HexaFullDamage;
     }
