@@ -177,6 +177,13 @@
             }
         }
     </style>
+    <script>
+        window.env = {
+            API: '<%=process.env.API%>'  // GitHub Actions에서 이 부분을 실제 API 키로 대체
+        };
+        // API 키가 제대로 설정되었는지 확인 (디버깅용)
+        console.log('API Key status:', window.env.API ? 'Set' : 'Not set');
+    </script>
 </head>
 <body>
     <div class="container mx-auto px-4 py-12 max-w-6xl">
