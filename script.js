@@ -32,7 +32,7 @@
             });
 
             if (!ocidResponse.ok) {
-                const errorData = await ocidResponse.json(); // 수정: response를 ocidResponse로 변경
+                const errorData = await response.json();
                 throw new Error(errorData.message || '캐릭터를 찾을 수 없습니다.');
             }
             const ocidData = await ocidResponse.json();
