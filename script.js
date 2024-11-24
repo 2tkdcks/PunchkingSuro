@@ -14,7 +14,7 @@
         error.style.display = 'none';
 
         try {
-            const apiKey = process.env.MAPLE_API_KEY;
+            const apiKey = process.env.API;
             
             // 날짜 설정 (어제 날짜 사용)
             const yesterday = new Date();
