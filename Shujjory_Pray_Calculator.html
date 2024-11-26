@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>슈쪼리 프레이 계산기</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e9f5ff; /* 파란색 배경 */
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            overflow: auto; /* 내용 넘침 방지 */
+        }
+        h1 {
+            text-align: center;
+            color: #2196F3; /* 파란색 */
+        }
+        label {
+            font-weight: bold;
+            color: #333;
+        }
+        input {
+            width: 100%; /* 전체 너비 사용 */
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid black; /* 검은색 테두리 */
+            border-radius: 4px;
+            box-sizing: border-box; /* 패딩 포함하여 너비 계산 */
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #2196F3; /* 파란색 버튼 */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #1976D2; /* 버튼 호버 색상 */
+        }
+        h2, h3 {
+            color: #2196F3; /* 파란색 */
+        }
+        p {
+            font-size: 18px;
+            color: #2196F3; /* 파란색 텍스트 */
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>슈쪼리 프레이 계산기</h1>
+        <label for="level">레벨:</label>
+        <input type="number" id="level" value="281" required>
+        <label for="int">인트:</label>
+        <input type="number" id="int" value="5172" required>
+        
+        <label for="intPer">인트퍼:</label>
+        <input type="number" id="intPer" value="454" required>
+        
+        <label for="nonAppliedInt">미적용인트:</label>
+        <input type="number" id="nonAppliedInt" value="24330" required>
+        
+        <button onclick="calculate()">계산하기</button>
+
+        <p id="result"></p>
+        <p id="seedlingX"></p> <!-- 시드링 가동 X 출력 -->
+        <p id="freyResult"></p> <!-- 프레이 결과 출력 -->
+        <p id="libraResult"></p> <!-- 리브라 결과 출력 -->
+
+        <label for="increaseInt">인트 증가량:</label>
+        <input type="number" id="increaseInt" value="0" required>
+        
+        <label for="increaseIntPer">인트퍼 증가량:</label>
+        <input type="number" id="increaseIntPer" value="0" required>
+        
+        <button onclick="calculateIncrease()">증가된 결과 계산하기</button>
+
+        <p id="increasedResult"></p>
+        <p id="increasedSeedlingX"></p> <!-- 증가된 결과의 시드링 가동 X 출력 -->
+        <p id="increasedFreyResult"></p> <!-- 증가된 프레이 결과 출력 -->
+        <p id="increasedLibraResult"></p> <!-- 증가된 리브라 결과 출력 -->
+        <p id="increaseAmount" style="font-size: 18px; color: #2196F3; text-align: center;"></p>
+    </div>
+
+    <script>
+        function calculate() {
+            const level = parseFloat(document.getElementById('level').value);
+            const int = parseFloat(document.getElementById('int').value);
+            const intPer = parseFloat(document.getElementById('intPer').value) / 100; // 100으로 나누기
+            const nonAppliedInt = parseFloat(document.getElementById('nonAppliedInt').value);
+            const MapleHero2 = ((level * 5) + 18) * 0.64;
+            const seedlingX = Math.floor((int + MapleHero2) * (intPer + 1) + nonAppliedInt); // 시드링 가동 X 계산
+            const result = Math.floor((int + MapleHero2 + 4016) * (intPer + 1) + nonAppliedInt); // 소수점 생략
+            
+            document.getElementById('result').innerText = `시드링 가동 중: ${result}`;
+            document.getElementById('seedlingX').innerText = `시드링 가동 X: ${seedlingX}`; // 시드링 가동 X 출력
+
+            // 프레이와 리브라 계산
+            const frey = Math.min(6 + Math.floor(seedlingX / 3000), 33);
+            const libra = Math.min(5 + Math.floor(seedlingX / 1250), 40);
+            document.getElementById('freyResult').innerText = `프레이: ${frey}`;
+            document.getElementById('libraResult').innerText = `리브라: ${libra}`;
+        }
+
+        function calculateIncrease() {
+            const level = parseFloat(document.getElementById('level').value);
+            const int = parseFloat(document.getElementById('int').value);
+            const intPer = parseFloat(document.getElementById('intPer').value) / 100; // 100으로 나누기
+            const increaseInt = parseFloat(document.getElementById('increaseInt').value);
+            const increaseIntPer = parseFloat(document.getElementById('increaseIntPer').value) / 100; // 100으로 나누기
+
+            const MapleHero2 = ((level * 5) + 18) * 0.64;
+            const newInt = int + increaseInt;
+            const newIntPer = intPer + increaseIntPer;
+            const nonAppliedInt = parseFloat(document.getElementById('nonAppliedInt').value);
+            const newSeedlingX = Math.floor((newInt + MapleHero2) * (newIntPer + 1) + nonAppliedInt); // 증가된 시드링 가동 X 계산
+            const result = Math.floor((newInt + MapleHero2 + 4016) * (newIntPer + 1) + nonAppliedInt); // 소수점 생략
+
+            const preSeedlingX = Math.floor((int + MapleHero2) * (intPer + 1) + nonAppliedInt); // 기존 수치
+            const increaseAmount = newSeedlingX - preSeedlingX; // 증가된 수치
+            
+            document.getElementById('increasedResult').innerText = `시드링 가동 중: ${result}`;
+            document.getElementById('increasedSeedlingX').innerText = `시드링 가동 X: ${newSeedlingX}`; // 증가된 시드링 가동 X 출력
+
+            // 증가된 프레이와 리브라 계산
+            const increasedFrey = Math.min(6 + Math.floor(newSeedlingX / 3000), 33);
+            const increasedLibra = Math.min(5 + Math.floor(newSeedlingX / 1250), 40);
+            document.getElementById('increasedFreyResult').innerText = `프레이: ${increasedFrey}`;
+            document.getElementById('increasedLibraResult').innerText = `리브라: ${increasedLibra}`;
+
+            document.getElementById('increaseAmount').innerText = `증가된 int 수치: ${increaseAmount}`; // 증가된 수치 출력
+        }
+    </script>
+</body>
+</html>
