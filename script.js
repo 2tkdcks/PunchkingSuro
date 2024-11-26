@@ -14,16 +14,11 @@
         error.style.display = 'none';
 
         try {
-            // API 키 가져오기
-            if (typeof window._apiKey === 'undefined') {
-                throw new Error('API 키가 설정되지 않았습니다. 페이지를 새로고침해주세요.');
-            }
-
-            const apiKey = window._apiKey;
+            const apiKey = process.env.API;
             if (!apiKey) {
-                throw new Error('API 키를 찾을 수 없습니다.');
+                throw new Error('API 키가 설정되지 않았습니다.');
             }
-                
+            
             // 날짜 설정 (어제 날짜 사용)
             const yesterday = new Date();
             yesterday.setDate(yesterday.getDate() - 1);
@@ -37,7 +32,7 @@
             });
 
             if (!ocidResponse.ok) {
-                const errorData = await ocidResponse.json();
+                const errorData = await response.json();
                 throw new Error(errorData.message || '캐릭터를 찾을 수 없습니다.');
             }
             const ocidData = await ocidResponse.json();
