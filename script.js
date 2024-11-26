@@ -14,12 +14,14 @@
         error.style.display = 'none';
 
         try {
-            if (!window.env) {
-                throw new Error('환경 설정이 로드되지 않았습니다. 잠시 후 다시 시도해주세요.');
+            // API 키 확인 및 유효성 검사
+            if (typeof window.env === 'undefined') {
+                throw new Error('환경 설정이 로드되지 않았습니다. 페이지를 새로고침해주세요.');
             }
-            const apiKey = window.env.API;  // getter를 통해 디코딩된 API 키를 가져옴
+            
+            const apiKey = window.env.API;
             if (!apiKey) {
-                throw new Error('API 키가 설정되지 않았습니다.');
+                throw new Error('API 키를 찾을 수 없습니다. GitHub Secrets에 API 키가 설정되어 있는지 확인해주세요.');
             }
             
             // 날짜 설정 (어제 날짜 사용)
