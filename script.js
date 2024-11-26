@@ -14,9 +14,9 @@
         error.style.display = 'none';
 
         try {
-            const apiKey = window.env.API;
-            if (!apiKey || apiKey.includes('<%=')) {
-                throw new Error('API 키가 설정되지 않았습니다. GitHub Secret에서 API 키를 확인해주세요.');
+            const apiKey = await window.env.getAPI();
+            if (!apiKey) {
+                throw new Error('API 키가 설정되지 않았습니다.');
             }
             
             // 날짜 설정 (어제 날짜 사용)
