@@ -14,12 +14,16 @@
         error.style.display = 'none';
 
         try {
-            if (!window.env || !window.env.API) {
-                throw new Error('API 키가 설정되지 않았습니다. GitHub Actions 배포가 완료될 때까지 기다려주세요.');
+            // API 키 가져오기
+            if (typeof window._apiKey === 'undefined') {
+                throw new Error('API 키가 설정되지 않았습니다. 페이지를 새로고침해주세요.');
             }
 
-            const apiKey = window.env.API;
-            
+            const apiKey = window._apiKey;
+            if (!apiKey) {
+                throw new Error('API 키를 찾을 수 없습니다.');
+            }
+                
             // 날짜 설정 (어제 날짜 사용)
             const yesterday = new Date();
             yesterday.setDate(yesterday.getDate() - 1);
@@ -351,4 +355,5 @@
     // 전역 스코프에서 사용할 함수들 등록
     window.HexaCalculate = HexaCalculate;
     window.searchCharacter = searchCharacter;
+
 
