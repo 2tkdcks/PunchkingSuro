@@ -14,7 +14,7 @@
         error.style.display = 'none';
 
         try {
-            const apiKey = await window.env.getAPI();
+            const apiKey = window.env.API;
             if (!apiKey) {
                 throw new Error('API 키가 설정되지 않았습니다.');
             }
