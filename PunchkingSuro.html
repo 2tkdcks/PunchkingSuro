@@ -271,12 +271,10 @@
         </div>
     </div>
     <script>
-        // API 키 초기화 (기본값 설정)
-        window.env = {
-            API: null
-        };
+        // API 키가 없을 때의 기본값 설정
+        window.env = { API: null };
     </script>
-    <script src="env.js" onerror="console.error('env.js 파일을 로드하지 못했습니다.')"></script>
+    <script src="env.js" onerror="console.error('env.js를 로드하지 못했습니다. GitHub Actions 배포를 확인해주세요.');"></script>
     <script src="script.js"></script>
 </body>
 </html>
