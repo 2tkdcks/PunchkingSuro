@@ -270,7 +270,18 @@
             </div>
         </div>
     </div>
-    
+    <script>
+        // API 키 초기화
+        window.env = window.env || {};
+        if (!window.env.API) {
+            Object.defineProperty(window.env, 'API', {
+                get: function() {
+                    console.error('API 키가 로드되지 않았습니다. env.js 파일을 확인해주세요.');
+                    return null;
+                }
+            });
+        }
+    </script>
     <script src="env.js"></script>
     <script src="script.js"></script>
 </body>
