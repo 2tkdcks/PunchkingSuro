@@ -14,9 +14,9 @@
         error.style.display = 'none';
 
         try {
-            const apiKey = window.env?.API;
-            if (!apiKey) {
-                throw new Error('API 키가 설정되지 않았습니다.');
+            const apiKey = window.env.API;
+            if (!apiKey || apiKey.includes('<%=')) {
+                throw new Error('API 키가 설정되지 않았습니다. GitHub Secret에서 API 키를 확인해주세요.');
             }
             
             // 날짜 설정 (어제 날짜 사용)
@@ -32,7 +32,7 @@
             });
 
             if (!ocidResponse.ok) {
-                const errorData = await response.json();
+                const errorData = await ocidResponse.json();
                 throw new Error(errorData.message || '캐릭터를 찾을 수 없습니다.');
             }
             const ocidData = await ocidResponse.json();
@@ -350,3 +350,4 @@
     // 전역 스코프에서 사용할 함수들 등록
     window.HexaCalculate = HexaCalculate;
     window.searchCharacter = searchCharacter;
+
