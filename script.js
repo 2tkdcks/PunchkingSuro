@@ -14,7 +14,7 @@
         error.style.display = 'none';
 
         try {
-            const apiKey = process.env.API;
+            const apiKey = window.env?.API;
             if (!apiKey) {
                 throw new Error('API 키가 설정되지 않았습니다.');
             }
@@ -350,6 +350,7 @@
     // 전역 스코프에서 사용할 함수들 등록
     window.HexaCalculate = HexaCalculate;
     window.searchCharacter = searchCharacter;
+
 
 
 
