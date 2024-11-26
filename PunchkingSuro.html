@@ -273,8 +273,18 @@
     <script>
         // API 키가 없을 때의 기본값 설정
         window.env = { API: null };
+        // API 키가 없을 때의 기본값 설정
+        window.env = { API: null };
+        
+        // 현재 URL에 따른 base path 설정
+        const basePath = location.hostname === 'localhost' ? '' : '/PunchkingSuro';
+        
+        // env.js 동적 로드
+        const envScript = document.createElement('script');
+        envScript.src = `${basePath}/env.js`;
+        envScript.onerror = () => console.error('env.js를 로드하지 못했습니다. GitHub Actions 배포를 확인해주세요.');
+        document.head.appendChild(envScript);
     </script>
-    <script src="env.js" onerror="console.error('env.js를 로드하지 못했습니다. GitHub Actions 배포를 확인해주세요.');"></script>
     <script src="script.js"></script>
 </body>
 </html>
