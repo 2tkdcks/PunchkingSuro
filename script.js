@@ -14,7 +14,10 @@
         error.style.display = 'none';
 
         try {
-            const apiKey = window.env.API;
+            if (!window.env) {
+                throw new Error('환경 설정이 로드되지 않았습니다. 잠시 후 다시 시도해주세요.');
+            }
+            const apiKey = window.env.API;  // getter를 통해 디코딩된 API 키를 가져옴
             if (!apiKey) {
                 throw new Error('API 키가 설정되지 않았습니다.');
             }
