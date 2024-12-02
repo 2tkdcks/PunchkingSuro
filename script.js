@@ -14,8 +14,12 @@
         error.style.display = 'none';
 
         try {
+            console.log('window.env:', window.env);
             const apiKey = window.env?.MAPLE_API_KEY;
+            console.log('API Key:', apiKey);
+            
             if (!apiKey || apiKey === '__MAPLE_API_KEY__') {
+                console.error('API Key not found or invalid');
                 error.textContent = 'API 키가 설정되지 않았습니다.';
                 error.style.display = 'block';
                 loading.style.display = 'none';
@@ -371,6 +375,7 @@
     // 전역 스코프에서 사용할 함수들 등록
     window.HexaCalculate = HexaCalculate;
     window.searchCharacter = searchCharacter;
+
 
 
 
