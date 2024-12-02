@@ -1,4 +1,4 @@
-// script.js
+// script.js 
     async function searchCharacter() {
         const characterName = document.getElementById('characterName').value;
         const loading = document.getElementById('loading');
