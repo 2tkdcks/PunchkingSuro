@@ -329,7 +329,7 @@
         else {
             score2 = 130 + (damage2 - 1710) / 30;
         }
-        var score3 = score2 / 1.09
+        var score3 = score2 / 1.15
   
         // 결과 숫자에 디자인 적용
         var damage2Element = document.getElementById("damage2");
