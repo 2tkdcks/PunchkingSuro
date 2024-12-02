@@ -14,9 +14,12 @@
         error.style.display = 'none';
 
         try {
-            const apiKey = window.env?.API;
-            if (!apiKey) {
-                throw new Error('API 키가 설정되지 않았습니다.');
+            const apiKey = window.env?.MAPLE_API_KEY;
+            if (!apiKey || apiKey === '__MAPLE_API_KEY__') {
+                error.textContent = 'API 키가 설정되지 않았습니다.';
+                error.style.display = 'block';
+                loading.style.display = 'none';
+                return;
             }
             
             // 날짜 설정 (어제 날짜 사용)
@@ -24,35 +27,53 @@
             yesterday.setDate(yesterday.getDate() - 1);
             const dateStr = yesterday.toISOString().split('T')[0];
 
+            // API 요청 공통 헤더
+            const headers = {
+                'Content-Type': 'application/json',
+                'x-nxopen-api-key': apiKey
+            };
+
             // 1. Character OCID 조회
             const ocidResponse = await fetch(`https://open.api.nexon.com/maplestory/v1/id?character_name=${encodeURIComponent(characterName)}`, {
-                headers: {
-                    'x-nxopen-api-key': apiKey
-                }
+                method: 'GET',
+                headers: headers
             });
 
             if (!ocidResponse.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.message || '캐릭터를 찾을 수 없습니다.');
+                const errorData = await ocidResponse.json();
+                error.textContent = errorData.error.message || '캐릭터를 찾을 수 없습니다.';
+                error.style.display = 'block';
+                loading.style.display = 'none';
+                return;
             }
             const ocidData = await ocidResponse.json();
             
             // 2. 캐릭터 기본 정보 조회
             const characterResponse = await fetch(`https://open.api.nexon.com/maplestory/v1/character/basic?ocid=${ocidData.ocid}&date=${dateStr}`, {
-                headers: {
-                    'x-nxopen-api-key': apiKey
-                }
+                method: 'GET',
+                headers: headers
             });
+
+            if (!characterResponse.ok) {
+                const errorData = await characterResponse.json();
+                error.textContent = errorData.error.message || '캐릭터 정보를 가져올 수 없습니다.';
+                error.style.display = 'block';
+                loading.style.display = 'none';
+                return;
+            }
 
             // 3. HEXA 매트릭스 정보 조회
             const hexaResponse = await fetch(`https://open.api.nexon.com/maplestory/v1/character/hexamatrix?ocid=${ocidData.ocid}&date=${dateStr}`, {
-                headers: {
-                    'x-nxopen-api-key': apiKey
-                }
+                method: 'GET',
+                headers: headers
             });
 
-            if (!characterResponse.ok || !hexaResponse.ok) {
-                throw new Error('캐릭터 정보를 가져올 수 없습니다.');
+            if (!hexaResponse.ok) {
+                const errorData = await hexaResponse.json();
+                error.textContent = errorData.error.message || 'HEXA 매트릭스 정보를 가져올 수 없습니다.';
+                error.style.display = 'block';
+                loading.style.display = 'none';
+                return;
             }
 
             const characterData = await characterResponse.json();
@@ -350,7 +371,6 @@
     // 전역 스코프에서 사용할 함수들 등록
     window.HexaCalculate = HexaCalculate;
     window.searchCharacter = searchCharacter;
-
 
 
 
