@@ -109,28 +109,32 @@
         // 스킬 레벨 입력에서 값 가져오기 및 숫자로 변환
         let MasteryCore1 = parseInt(document.getElementById("MasteryCore1").value);
         let MasteryCore2 = parseInt(document.getElementById("MasteryCore2").value);
+        let MasteryCore3 = parseInt(document.getElementById("MasteryCore3").value);
+        let MasteryCore4 = parseInt(document.getElementById("MasteryCore4").value);
         let OriginCore = parseInt(document.getElementById("OriginCore").value);
         let FifthCore1 = parseInt(document.getElementById("FifthCore1").value);
         let FifthCore2 = parseInt(document.getElementById("FifthCore2").value);
         let FifthCore3 = parseInt(document.getElementById("FifthCore3").value);
         let FifthCore4 = parseInt(document.getElementById("FifthCore4").value);
     
-        let OriginShare = 16.74; // 오리진
+        let OriginShare = 14.49; // 오리진
     
-        let MasteryShare1_1 = 7.34; // 정뿌
-        let MasteryShare1_2 = 4.23; // 산꼬마
-        let MasteryShare1_3 = 4.15; // 산의 씨앗
+        let MasteryShare1_1 = 5.14; // 정뿌
+        let MasteryShare1_2 = 3.34; // 산꼬마
+        let MasteryShare1_3 = 3.66; // 산의 씨앗
     
-        let MasteryShare2_1 = 11.17; // 해분출
-        let MasteryShare2_2 = 9.29; // 바람분출
-        let MasteryShare2_3 = 6.77; // 강분출
-    
-        let FifthShare1 = 10.85; // 해강산
-        let FifthShare2 = 11.45; // 굽이굽이
-        let FifthShare3 = 10.28; // 큰기지개
-        let FifthShare4 = 5.54; // 용솟음
+        let MasteryShare2_1 = 13.86; // 해분출
+        let MasteryShare2_2 = 11.15; // 바람분출
+        let MasteryShare2_3 = 8.71; // 강분출
 
-        let GitaShare = 2.19; // 나머지 점유율
+        let MasteryShare4 = 2.66; // 잠깨우기
+    
+        let FifthShare1 = 9.22; // 해강산
+        let FifthShare2 = 10.82; // 굽이굽이
+        let FifthShare3 = 10.44; // 큰기지개
+        let FifthShare4 = 5.16; // 용솟음
+
+        let GitaShare = 1.35; // 나머지 점유율
     
         let nowOriginShare; // 오리진
     
@@ -141,6 +145,8 @@
         let nowMasteryShare2_1; // 해분출
         let nowMasteryShare2_2; // 바람분출
         let nowMasteryShare2_3; // 강분출
+
+        let nowMasteryShare4; // 잠깨우기
     
         let nowFifthShare1; // 해강산
         let nowFifthShare2; // 굽이굽이
@@ -196,8 +202,12 @@
         let nowMastery2_1Damage;
     
         nowMastery2_1Damage = (760 + MasteryCore2 * 10) * 6 * 6 + (450 + MasteryCore2 * 5) * 60 + ((465 + MasteryCore2 * 7) * 3 + (465 + MasteryCore2 * 7 * 0.9) * 3 * 4) * 28;
+
+        nowMastery2_1Damage = nowMastery2_1Damage * ((106+(MasteryCore3%2==0?MasteryCore3-2:MasteryCore3-1)/2)/100) * ((101+(MasteryCore4%2==0?MasteryCore4-2:MasteryCore4-1)/2)/100);
     
         let Mastery2_1Damage = (760 + 300) * 6 * 6 + (450 + 150) * 60 + ((465 + 210) * 3 + (465 + 30 * 7 * 0.9) * 3 * 4) * 28;
+
+        Mastery2_1Damage = Mastery2_1Damage * 1.2 * 1.15;
     
         nowMasteryShare2_1 = (nowMastery2_1Damage / Mastery2_1Damage) * MasteryShare2_1;
     
@@ -205,8 +215,12 @@
         let nowMastery2_2Damage;
     
         nowMastery2_2Damage = (510 + MasteryCore2 * 6);
+
+        nowMastery2_2Damage = nowMastery2_2Damage * ((106+(MasteryCore3%2==0?MasteryCore3-2:MasteryCore3-1)/2)/100) * ((101+(MasteryCore4%2==0?MasteryCore4-2:MasteryCore4-1)/2)/100);
     
         let Mastery2_2Damage = (510 + 30 * 6);
+
+        Mastery2_2Damage = Mastery2_2Damage * 1.2 * 1.15;
     
         nowMasteryShare2_2 = (nowMastery2_2Damage / Mastery2_2Damage) * MasteryShare2_2;
     
@@ -214,10 +228,21 @@
         let nowMastery2_3Damage;
     
         nowMastery2_3Damage = (930 + MasteryCore2 * 13) * 8 * 8 + (780 + MasteryCore2 * 11) * 5 * 20;
+
+        nowMastery2_3Damage = nowMastery2_3Damage * ((106+(MasteryCore3%2==0?MasteryCore3-2:MasteryCore3-1)/2)/100) * ((101+(MasteryCore4%2==0?MasteryCore4-2:MasteryCore4-1)/2)/100);
     
         let Mastery2_3Damage = (930 + 30 * 13) * 8 * 8 + (780 + 30 * 11) * 5 * 20;
+
+        Mastery2_3Damage = Mastery2_3Damage * 1.2 * 1.15;
     
         nowMasteryShare2_3 = (nowMastery2_3Damage / Mastery2_3Damage) * MasteryShare2_3;
+
+        // 잠깨우기 감소 계산
+        let nowMastery4Damage = 700 + (MasteryCore4 * 15);
+
+        let Mastery4Damage = 700 + 450;
+        
+        nowMasteryShare4 = (nowMastery4Damage / Mastery4Damage) * MasteryShare4;
     
         // 해강산 감소 계산
         let nowFifth1Damage;
@@ -264,6 +289,7 @@
         MasteryShare2_1 +
         MasteryShare2_2 +
         MasteryShare2_3 +
+        MasteryShare4 +
         FifthShare1 +
         FifthShare2 +
         FifthShare3 +
@@ -279,6 +305,7 @@
         nowMasteryShare2_1 +
         nowMasteryShare2_2 +
         nowMasteryShare2_3 +
+        nowMasteryShare4 +
         nowFifthShare1 +
         nowFifthShare2 +
         nowFifthShare3 +
@@ -317,7 +344,7 @@
     function calculate2() {
         var HexaLevel = HexaCalculate()
         var hexa2 = document.getElementById("hexa2").value;
-        var hexaDamage2 = 0.005278 * HexaLevel;
+        var hexaDamage2 = 0.0060859 * HexaLevel;
         var damage2 = parseInt(hexa2) * hexaDamage2;
         var score2 = 0;
 
@@ -371,7 +398,6 @@
             tooltipContent.style.opacity = isVisible ? '0' : '1';
         });
     }
-
     // 전역 스코프에서 사용할 함수들 등록
     window.HexaCalculate = HexaCalculate;
     window.searchCharacter = searchCharacter;
