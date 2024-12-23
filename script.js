@@ -344,7 +344,7 @@
     function calculate2() {
         var HexaLevel = HexaCalculate()
         var hexa2 = document.getElementById("hexa2").value;
-        var hexaDamage2 = 0.0060859 * HexaLevel;
+        var hexaDamage2 = 0.006066 * HexaLevel;
         var damage2 = parseInt(hexa2) * hexaDamage2;
         var score2 = 0;
 
