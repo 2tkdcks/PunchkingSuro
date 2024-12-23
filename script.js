@@ -90,11 +90,13 @@
             // HEXA 코어 레벨 업데이트
             document.getElementById("MasteryCore1").value = hexaData.character_hexa_core_equipment[1].hexa_core_level || 0;
             document.getElementById("MasteryCore2").value = hexaData.character_hexa_core_equipment[2].hexa_core_level || 0;
+            document.getElementById("MasteryCore3").value = hexaData.character_hexa_core_equipment[3].hexa_core_level || 0;
+            document.getElementById("MasteryCore4").value = hexaData.character_hexa_core_equipment[4].hexa_core_level || 0;
             document.getElementById("OriginCore").value = hexaData.character_hexa_core_equipment[0].hexa_core_level || 0;
-            document.getElementById("FifthCore1").value = hexaData.character_hexa_core_equipment[4].hexa_core_level || 0;
-            document.getElementById("FifthCore2").value = hexaData.character_hexa_core_equipment[6].hexa_core_level || 0;
-            document.getElementById("FifthCore3").value = hexaData.character_hexa_core_equipment[3].hexa_core_level || 0;
-            document.getElementById("FifthCore4").value = hexaData.character_hexa_core_equipment[5].hexa_core_level || 0;
+            document.getElementById("FifthCore1").value = hexaData.character_hexa_core_equipment[6].hexa_core_level || 0; // 해강산
+            document.getElementById("FifthCore2").value = hexaData.character_hexa_core_equipment[8].hexa_core_level || 0; // 굽이굽이
+            document.getElementById("FifthCore3").value = hexaData.character_hexa_core_equipment[5].hexa_core_level || 0; // 큰기지개
+            document.getElementById("FifthCore4").value = hexaData.character_hexa_core_equipment[7].hexa_core_level || 0; // 용솟음치는 정기
 
         } catch (err) {
             console.error('Error:', err);
