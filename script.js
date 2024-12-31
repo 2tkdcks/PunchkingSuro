@@ -119,24 +119,24 @@
         let FifthCore3 = parseInt(document.getElementById("FifthCore3").value);
         let FifthCore4 = parseInt(document.getElementById("FifthCore4").value);
     
-        let OriginShare = 14.49; // 오리진
-    
-        let MasteryShare1_1 = 5.14; // 정뿌
-        let MasteryShare1_2 = 3.34; // 산꼬마
-        let MasteryShare1_3 = 3.66; // 산의 씨앗
-    
-        let MasteryShare2_1 = 13.86; // 해분출
-        let MasteryShare2_2 = 11.15; // 바람분출
-        let MasteryShare2_3 = 8.71; // 강분출
+        let OriginShare = 14.83; // 오리진
 
-        let MasteryShare4 = 2.66; // 잠깨우기
+        let MasteryShare1_1 = 5.18; // 정뿌
+        let MasteryShare1_2 = 3.14; // 산꼬마
+        let MasteryShare1_3 = 3.77; // 산의 씨앗
     
-        let FifthShare1 = 9.22; // 해강산
-        let FifthShare2 = 10.82; // 굽이굽이
-        let FifthShare3 = 10.44; // 큰기지개
-        let FifthShare4 = 5.16; // 용솟음
-
-        let GitaShare = 1.35; // 나머지 점유율
+        let MasteryShare2_1 = 13.38; // 해분출
+        let MasteryShare2_2 = 11.12; // 바람분출
+        let MasteryShare2_3 = 8.17; // 강분출
+    
+        let MasteryShare4 = 3.29; // 잠깨우기
+    
+        let FifthShare1 = 9.35; // 해강산
+        let FifthShare2 = 11.16; // 굽이굽이
+        let FifthShare3 = 9.99; // 큰기지개
+        let FifthShare4 = 5.01; // 용솟음
+    
+        let GitaShare = 1.61; // 나머지 점유율
     
         let nowOriginShare; // 오리진
     
