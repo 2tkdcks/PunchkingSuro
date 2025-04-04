@@ -107,6 +107,19 @@
         }
     }
 
+    function setMaxHexa() {
+        // 모든 스킬 레벨 입력란에 30을 설정
+        document.getElementById("MasteryCore1").value = 30;
+        document.getElementById("MasteryCore2").value = 30;
+        document.getElementById("MasteryCore3").value = 30;
+        document.getElementById("MasteryCore4").value = 30;
+        document.getElementById("OriginCore").value = 30;
+        document.getElementById("FifthCore1").value = 30;
+        document.getElementById("FifthCore2").value = 30;
+        document.getElementById("FifthCore3").value = 30;
+        document.getElementById("FifthCore4").value = 30;
+    }    
+
     function HexaCalculate() {
         // 스킬 레벨 입력에서 값 가져오기 및 숫자로 변환
         let MasteryCore1 = parseInt(document.getElementById("MasteryCore1").value);
