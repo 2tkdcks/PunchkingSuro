@@ -6,55 +6,73 @@
     <title>라라 펀치킹 수로 계산기</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+
     <style>
         body {
             background-color: #f8fafc;
             color: #1e293b;
+            font-family: 'Noto Sans KR', sans-serif; /* 모던한 글꼴 적용 */
         }
         .card {
             transition: all 0.3s ease;
             border: 1px solid #e2e8f0;
             backdrop-filter: blur(10px);
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.9); /* 투명도 약간 조정 */
+            border-radius: 1rem; /* 모서리 더 둥글게 */
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05); /* 기본 그림자 추가 */
         }
         .card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transform: translateY(-5px); /* 더 많이 떠오르는 느낌 */
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15); /* 호버 시 그림자 강화 */
         }
-        
-        input[type="number"] {
-            transition: all 0.2s ease;
-            border: 2px solid #e2e8f0;
-            background: #f8fafc;
+
+        input[type="number"], input[type="text"] { /* 텍스트 입력 필드도 함께 적용 */
+            transition: all 0.3s ease; /* 전환 효과 시간 증가 */
+            border: 2px solid #cbd5e1; /* 기본 테두리 색상 조정 */
+            background: #ffffff; /* 배경색 흰색 */
+            border-radius: 0.5rem; /* 모서리 둥글게 */
+            padding: 0.75rem 1rem; /* 패딩 조정 */
+            font-size: 1rem; /* 글꼴 크기 */
+            color: #334155; /* 텍스트 색상 */
         }
-        input[type="number"]:focus {
-            border-color: #4ade80;
-            box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.2);
+        input[type="number"]:focus, input[type="text"]:focus {
+            border-color: #22c55e; /* 포커스 시 테두리 색상 강조 */
+            box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.3); /* 포커스 시 그림자 강화 */
+            background-color: #ecfdf5; /* 포커스 시 배경색 변경 */
+            outline: none; /* 기본 아웃라인 제거 */
         }
-        
+
         .btn-green {
             background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
             border: none;
             transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3); /* 기본 그림자 추가 */
+            border-radius: 0.5rem; /* 모서리 둥글게 */
         }
         .btn-green:hover {
             background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.25);
+            transform: translateY(-2px); /* 더 많이 떠오르는 느낌 */
+            box-shadow: 0 8px 25px rgba(34, 197, 94, 0.5); /* 호버 시 그림자/광채 효과 강화 */
         }
-        
-        /* 헤더 스타일 개선 */
+         .btn-green:active { /* 클릭 시 효과 추가 */
+            transform: translateY(0);
+            box-shadow: 0 3px 10px rgba(34, 197, 94, 0.3);
+        }
+
+        /* 헤더 스타일 개선 - 그대로 유지하거나 조정 가능 */
         h1 {
             background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1); /* 그림자 강화 */
+            font-weight: 800; /* 글꼴 두께 */
         }
 
-        /* 결과 텍스트 스타일 */
+        /* 결과 텍스트 스타일 - 그대로 유지 */
         #damage, #damage2, #score, #score2 {
-            font-family: 'Pretendard', sans-serif;
+            font-family: 'Noto Sans KR', sans-serif; /* 글꼴 통일 */
             background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
             background-clip: text;
             -webkit-background-clip: text;
@@ -63,79 +81,92 @@
             margin: 0;
             line-height: 1.5;
             text-align: center;
+            font-weight: 700; /* 결과 텍스트 두께 */
+            font-size: 1.25rem; /* 결과 텍스트 크기 조정 */
         }
 
         .result-container {
-            margin-top: 1rem;
+            margin-top: 1.5rem; /* 상단 여백 증가 */
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 0;
+            gap: 0.5rem; /* 결과 항목 간 간격 추가 */
         }
 
-        /* 툴팁 스타일 추가 */
+        /* 툴팁 스타일 추가 - 기본 구조 유지, 디자인 조정 */
         .tooltip {
             position: relative;
             display: inline-block;
+            cursor: help; /* 마우스 커서 변경 */
         }
-        
+
         .tooltip .tooltip-content {
             visibility: hidden;
-            width: 420px;
-            background-color: rgba(255, 255, 255, 0.95);
+            width: 450px; /* 너비 증가 */
+            background-color: rgba(255, 255, 255, 0.98); /* 배경 투명도 감소 */
             text-align: center;
-            padding: 1rem;
+            padding: 1.5rem; /* 패딩 증가 */
             position: absolute;
             z-index: 1000;
-            top: 125%;
+            top: 130%; /* 위치 조정 */
             left: 50%;
-            margin-left: -210px;
+            margin-left: -225px; /* 너비의 절반 */
             opacity: 0;
-            transition: opacity 0.3s;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            border: 1px solid rgba(0, 0, 0, 0.1);
+            transition: opacity 0.3s ease, top 0.3s ease; /* 부드러운 등장 애니메이션 */
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15); /* 그림자 강화 */
+            border-radius: 12px; /* 모서리 더 둥글게 */
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            pointer-events: none; /* 툴팁 내용 자체는 마우스 이벤트 받지 않도록 */
         }
-        
+
         .tooltip:hover .tooltip-content {
             visibility: visible;
             opacity: 1;
-        }
-        
-        .tooltip img {
-            width: 100%;
-            margin-bottom: 0.5rem;
-        }
-        
-        .info-button {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
-            border: none;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .info-button:hover {
-            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
-            transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(34, 197, 94, 0.25);
-        }
-        
-        .info-icon {
-            color: #4ade80;
-            font-size: 1.25rem;
-        }
-        
-        .info-text {
-            color: #1e293b;
-            font-weight: 500;
+            top: 120%; /* 살짝 올라오는 애니메이션 */
+            pointer-events: auto; /* 호버 시 마우스 이벤트 받도록 */
         }
 
-        /* 모바일 대응 */
+         .info-button { /* 툴팁 트리거 버튼 스타일 변경 */
+            display: inline-flex; /* flex로 변경 */
+            align-items: center;
+            gap: 0.75rem; /* 간격 증가 */
+            padding: 0.6rem 1.2rem; /* 패딩 조정 */
+            background: linear-gradient(135deg, #a7f3d0 0%, #34d399 100%); /* 연한 녹색 그라데이션 */
+            color: #065f46; /* 텍스트 색상 */
+            border: none;
+            border-radius: 2rem; /* 알약 형태 */
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(52, 211, 153, 0.2);
+        }
+
+        .info-button:hover {
+            background: linear-gradient(135deg, #34d399 0%, #065f46 100%);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(52, 211, 153, 0.3);
+        }
+
+        .info-icon {
+            color: #065f46; /* 아이콘 색상 */
+            font-size: 1.3rem; /* 아이콘 크기 증가 */
+            transition: color 0.3s ease;
+        }
+         .info-button:hover .info-icon {
+             color: white; /* 호버 시 아이콘 색상 변경 */
+         }
+
+        .info-text {
+            color: #065f46; /* 텍스트 색상 */
+            font-weight: 600; /* 글꼴 두께 */
+            transition: color 0.3s ease;
+        }
+        .info-button:hover .info-text {
+            color: white; /* 호버 시 텍스트 색상 변경 */
+        }
+
+
+        /* 모바일 대응 - 툴팁 모달 스타일 유지 */
         @media (max-width: 768px) {
             .tooltip .tooltip-content {
                 position: fixed;
@@ -149,45 +180,76 @@
                 background-color: white;
                 padding: 1.5rem;
                 -webkit-overflow-scrolling: touch;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* 모바일 모달 그림자 강화 */
+                transition: opacity 0.3s ease; /* 모바일에서는 top 애니메이션 제거 */
+                pointer-events: auto; /* 모바일에서는 항상 마우스 이벤트 받음 */
             }
 
             .tooltip img {
                 width: 100%;
                 height: auto;
-                margin: 0.5rem 0;
+                margin: 0.75rem 0; /* 모바일 이미지 간격 */
             }
 
-            /* 닫기 버튼 추가 */
             .close-tooltip {
                 position: absolute;
-                top: 0.5rem;
-                right: 0.5rem;
-                background: rgba(0, 0, 0, 0.7);
+                top: 1rem; /* 위치 조정 */
+                right: 1rem; /* 위치 조정 */
+                background: rgba(0, 0, 0, 0.6); /* 배경색 조정 */
                 color: white;
                 border: none;
                 border-radius: 50%;
-                width: 2.5rem;
-                height: 2.5rem;
+                width: 2rem; /* 크기 조정 */
+                height: 2rem; /* 크기 조정 */
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 cursor: pointer;
                 z-index: 1001;
-                font-size: 1.2rem;
+                font-size: 1.1rem; /* 글꼴 크기 조정 */
+                opacity: 0.8; /* 투명도 */
+                transition: opacity 0.2s ease;
+            }
+            .close-tooltip:hover {
+                opacity: 1; /* 호버 시 투명도 */
+            }
+
+            /* 모바일에서는 호버 효과 대신 자바스크립트로 토글 */
+             .tooltip:hover .tooltip-content {
+                 visibility: hidden;
+                 opacity: 0;
+                 top: 50%; /* 모바일에서는 중앙 유지 */
+                 pointer-events: none;
+             }
+
+            /* 모바일 툴팁 토글을 위한 CSS 클래스 (JS에서 제어) */
+             .tooltip.active .tooltip-content {
+                visibility: visible;
+                opacity: 1;
+                pointer-events: auto;
             }
         }
+
+         /* 설명서 버튼의 텍스트 및 아이콘을 감싸는 div에 flex 적용 */
+        .info-trigger-content {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
     </style>
 </head>
 <body>
     <div class="container mx-auto px-4 py-12 max-w-6xl">
         <h1 class="text-5xl font-black text-center mb-12">라라 펀치킹 수로 계산기</h1>
-        
+
         <div class="flex flex-col items-center mb-8">
-            <div class="tooltip">
-                <div class="flex items-center">
-                    <i class="fas fa-book info-icon"></i>
-                    <span class="ml-2 info-text">설명서</span>
-                </div>
+             <div class="tooltip">
+                <button class="info-button"> <div class="info-trigger-content">
+                        <i class="fas fa-book info-icon"></i>
+                        <span class="info-text">설명서</span>
+                    </div>
+                </button>
                 <div class="tooltip-content">
                     <button class="close-tooltip">×</button>
                     <img src="펀치킹 환산.png" alt="펀치킹 환산" class="w-full mb-2">
@@ -197,11 +259,8 @@
         </div>
 
         <div class="search-form mb-8">
-            <input type="text" id="characterName" placeholder="캐릭터 이름을 입력하세요" class="border border-gray-300 rounded-md px-4 py-2 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-green-500 text-center">
-            <button onclick="searchCharacter()" class="w-full btn-green text-white font-bold py-2 px-4 rounded transition duration-300">검색</button>
-            <div class="loading" id="loading">개발중..</div>
-            <div class="error" id="error"></div>
-        </div>
+            <input type="text" id="characterName" placeholder="캐릭터 이름을 입력하세요" class="border rounded-md px-4 py-2 w-full mb-4 text-center">
+            <button onclick="searchCharacter()" class="w-full btn-green text-white font-bold py-3 px-4 rounded">검색</button> <div class="loading mt-2 text-center text-gray-600" id="loading">개발중..</div> <div class="error mt-2 text-center text-red-500" id="error"></div> </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
             <div class="card bg-white rounded-lg shadow-md p-6">
@@ -209,82 +268,55 @@
                     <h2 class="text-2xl font-semibold text-center text-gray-700">펀치킹용 계산기</h2>
                 </div>
                 <p class="mt-2 mb-4 text-sm text-center text-gray-600">계산기 제작자 : 엘리시움 아기양라라쟝</p>
-                <input type="number" id="hexa" placeholder="일반 환산 입력" class="border border-gray-300 rounded-md px-4 py-2 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-green-500 text-center">
-                <button onclick="calculate()" class="w-full btn-green text-white font-bold py-2 px-4 rounded transition duration-300">계산하기</button>
-                <div class="result-container">
-                    <p id="damage" class="text-lg text-center text-gray-700"></p>
-                    <p id="score" class="text-lg text-center text-gray-700"></p>
-                </div>
+                <input type="number" id="hexa" placeholder="일반 환산 입력" class="border rounded-md px-4 py-2 w-full mb-4 text-center">
+                <button onclick="calculate()" class="w-full btn-green text-white font-bold py-3 px-4 rounded">계산하기</button> <div class="result-container">
+                    <p id="damage" class="text-xl font-bold text-center text-gray-800"></p> <p id="score" class="text-xl font-bold text-center text-gray-800"></p> </div>
             </div>
-            
+
             <div class="card bg-white rounded-lg shadow-md p-6">
                 <h2 class="text-2xl font-semibold mb-4 text-center text-gray-700">수로용 계산기</h2>
                 <p class="mt-2 mb-4 text-sm text-center text-gray-600">펀치킹, 수로 표본 제공 : 스카니아 엥새</p>
-                <input type="number" id="hexa2" placeholder="헥사 환산 아님" class="border border-gray-300 rounded-md px-4 py-2 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-green-500 text-center">
-                <button onclick="calculate2()" class="w-full btn-green text-white font-bold py-2 px-4 rounded transition duration-300">계산하기</button>
-                <div class="result-container">
-                    <p id="damage2" class="text-lg text-center text-gray-700"></p>
-                    <p id="score2" class="text-lg text-center text-gray-700"></p>
-                </div>
+                <input type="number" id="hexa2" placeholder="헥사 환산 아님" class="border rounded-md px-4 py-2 w-full mb-4 text-center">
+                <button onclick="calculate2()" class="w-full btn-green text-white font-bold py-3 px-4 rounded">계산하기</button> <div class="result-container">
+                    <p id="damage2" class="text-xl font-bold text-center text-gray-800"></p> <p id="score2" class="text-xl font-bold text-center text-gray-800"></p> </div>
             </div>
         </div>
-        
+
         <div class="card bg-white rounded-lg shadow-md p-6">
-            <h2 class="text-2xl font-semibold mb-4 text-center text-gray-700">스킬 레벨 입력</h2>
-            <div class="flex justify-center mb-4">
-                <button onclick="setMaxHexa()" class="btn-green text-white font-bold py-2 px-4 rounded transition duration-300">헥사 만렙 설정</button>
-            </div> 
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="flex flex-col items-center">
-                    <img src="정뿌.png" alt="정뿌" class="w-6 h-6 mb-2">
-                    <span class="text-sm text-gray-700">정기 뿌리기</span>
-                    <input type="number" id="MasteryCore1" placeholder="0~30" min="0" max="30" class="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500 text-center">
+            <h2 class="text-2xl font-semibold mb-6 text-center text-gray-700">스킬 레벨 입력</h2> <div class="flex justify-center mb-6"> <button onclick="setMaxHexa()" class="btn-green text-white font-bold py-2 px-6 rounded">헥사 만렙 설정</button> </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6"> <div class="flex flex-col items-center">
+                    <img src="정뿌.png" alt="정뿌" class="w-8 h-8 mb-2"> <span class="text-sm text-gray-700 mb-2">정기 뿌리기</span> <input type="number" id="MasteryCore1" placeholder="0~30" min="0" max="30" class="border rounded-md px-3 py-2 w-full text-center">
                 </div>
                 <div class="flex flex-col items-center">
-                    <img src="분출.png" alt="분출" class="w-6 h-6 mb-2">
-                    <span class="text-sm text-gray-700">분출</span>
-                    <input type="number" id="MasteryCore2" placeholder="1~30" min="1" max="30" class="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500 text-center">
+                    <img src="분출.png" alt="분출" class="w-8 h-8 mb-2"> <span class="text-sm text-gray-700 mb-2">분출</span> <input type="number" id="MasteryCore2" placeholder="1~30" min="1" max="30" class="border rounded-md px-3 py-2 w-full text-center">
                 </div>
                 <div class="flex flex-col items-center">
-                    <img src="흡수.png" alt="흡수" class="w-6 h-6 mb-2">
-                    <span class="text-sm text-gray-700">흡수</span>
-                    <input type="number" id="MasteryCore3" placeholder="0~30" min="0" max="30" class="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500 text-center">
+                    <img src="흡수.png" alt="흡수" class="w-8 h-8 mb-2"> <span class="text-sm text-gray-700 mb-2">흡수</span> <input type="number" id="MasteryCore3" placeholder="0~30" min="0" max="30" class="border rounded-md px-3 py-2 w-full text-center">
                 </div>
                 <div class="flex flex-col items-center">
-                    <img src="잠깨우기.png" alt="잠깨우기" class="w-6 h-6 mb-2">
-                    <span class="text-sm text-gray-700">잠깨우기</span>
-                    <input type="number" id="MasteryCore4" placeholder="1~30" min="1" max="30" class="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500 text-center">
-                </div>                
-                <div class="flex flex-col items-center">
-                    <img src="꽃누리.png" alt="꽃누리" class="w-6 h-6 mb-2">
-                    <span class="text-sm text-gray-700">새록새록 꽃누리</span>
-                    <input type="number" id="OriginCore" placeholder="1~30" min="1" max="30" class="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500 text-center">
+                    <img src="잠깨우기.png" alt="잠깨우기" class="w-8 h-8 mb-2"> <span class="text-sm text-gray-700 mb-2">잠깨우기</span> <input type="number" id="MasteryCore4" placeholder="1~30" min="1" max="30" class="border rounded-md px-3 py-2 w-full text-center">
                 </div>
                 <div class="flex flex-col items-center">
-                    <img src="해강산.png" alt="해강산" class="w-6 h-6 mb-2">
-                    <span class="text-sm text-gray-700">해 강 산 바람</span>
-                    <input type="number" id="FifthCore1" placeholder="0~30" min="0" max="30" class="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500 text-center">
+                    <img src="꽃누리.png" alt="꽃누리" class="w-8 h-8 mb-2"> <span class="text-sm text-gray-700 mb-2">새록새록 꽃누리</span> <input type="number" id="OriginCore" placeholder="1~30" min="1" max="30" class="border rounded-md px-3 py-2 w-full text-center">
                 </div>
                 <div class="flex flex-col items-center">
-                    <img src="굽이굽이.png" alt="굽이굽이" class="w-6 h-6 mb-2">
-                    <span class="text-sm text-gray-700">산등성이 굽이굽이</span>
-                    <input type="number" id="FifthCore2" placeholder="0~30" min="0" max="30" class="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500 text-center">
+                    <img src="해강산.png" alt="해강산" class="w-8 h-8 mb-2"> <span class="text-sm text-gray-700 mb-2">해 강 산 바람</span> <input type="number" id="FifthCore1" placeholder="0~30" min="0" max="30" class="border rounded-md px-3 py-2 w-full text-center">
                 </div>
                 <div class="flex flex-col items-center">
-                    <img src="큰기지개.png" alt="큰기지개" class="w-6 h-6 mb-2">
-                    <span class="text-sm text-gray-700">큰 기지개</span>
-                    <input type="number" id="FifthCore3" placeholder="0~30" min="0" max="30" class="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500 text-center">
+                    <img src="굽이굽이.png" alt="굽이굽이" class="w-8 h-8 mb-2"> <span class="text-sm text-gray-700 mb-2">산등성이 굽이굽이</span> <input type="number" id="FifthCore2" placeholder="0~30" min="0" max="30" class="border rounded-md px-3 py-2 w-full text-center">
                 </div>
                 <div class="flex flex-col items-center">
-                    <img src="용솟음.png" alt="용솟음" class="w-6 h-6 mb-2">
-                    <span class="text-sm text-gray-700">용솟음치는 정기</span>
-                    <input type="number" id="FifthCore4" placeholder="0~30" min="0" max="30" class="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500 text-center">
+                    <img src="큰기지개.png" alt="큰기지개" class="w-8 h-8 mb-2"> <span class="text-sm text-gray-700 mb-2">큰 기지개</span> <input type="number" id="FifthCore3" placeholder="0~30" min="0" max="30" class="border rounded-md px-3 py-2 w-full text-center">
+                </div>
+                <div class="flex flex-col items-center">
+                    <img src="용솟음.png" alt="용솟음" class="w-8 h-8 mb-2"> <span class="text-sm text-gray-700 mb-2">용솟음치는 정기</span> <input type="number" id="FifthCore4" placeholder="0~30" min="0" max="30" class="border rounded-md px-3 py-2 w-full text-center">
                 </div>
             </div>
         </div>
     </div>
 
     <script src="script.js"></script>
+
 </body>
 </html>
 
